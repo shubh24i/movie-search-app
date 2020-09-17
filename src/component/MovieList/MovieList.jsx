@@ -65,8 +65,10 @@ const MovieList = () => {
 
         var store = JSON.parse(localStorage.getItem("favMovie") || '[]');
 
+        if (store === undefined || store === null) {
+            localStorage.setItem("favMovie", JSON.stringify([movie]));
+        }
         let isMovieExist = store.filter((item) => { return item.imdbID === movie.imdbID });
-
         if (isMovieExist.length > 0 && store !== null) {
             favMovie = store.filter((item) => { return item.imdbID !== movie.imdbID });
             localStorage.setItem("favMovie", JSON.stringify(favMovie));
@@ -74,11 +76,14 @@ const MovieList = () => {
         } else {
             store.push(movie);
             localStorage.setItem("favMovie", JSON.stringify(store));
-
-            setAddToFav((prevState) => ([
-                ...prevState,
-                movie,
-            ]));
+            if (addToFav !== null) {
+                setAddToFav((prevState) => ([
+                    ...prevState,
+                    movie,
+                ]))
+            } else {
+                setAddToFav([movie]);
+            };
         }
 
     };
@@ -88,11 +93,10 @@ const MovieList = () => {
         <>
             <Switch>
                 <Route path="/" exact  ><Search searchMovies={searchMovies} /><Movies movieList={movies} addToFavFunc={addToFavHandler} isLoading={isLoading} isError={isError} addToFav={addToFav} /></Route>
-                <Route path="/Favourites" exact><FavouriteMovies movieIdList={addToFav} /></Route>
+                <Route path="/Favourites" exact><FavouriteMovies favMovieList={addToFav} /></Route>
             </Switch>
             <ToastContainer />
         </>
     );
 }
-
 export default MovieList;
