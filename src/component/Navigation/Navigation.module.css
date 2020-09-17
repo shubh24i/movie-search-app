@@ -1,0 +1,10 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.4rem;
+}
+
+.nav a{
+    display:inline-block;
+}
+

@@ -1,0 +1,8 @@
+.pRL20 {
+    padding: 0 20px;
+  }
+
+  .Movielist{
+    display: flex;
+    flex-wrap: wrap;
+    }

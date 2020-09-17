@@ -1,0 +1,8 @@
+body{
+  box-sizing: border-box;
+}
+.mainWrapper{
+  width: 80%;
+  max-width: 980px;
+  margin: 0 auto;
+}

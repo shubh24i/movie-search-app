@@ -1,0 +1,71 @@
+
+
+    .pRL20 {
+      padding: 0 20px;
+    }
+    .mb30 {
+      margin-bottom: 30px;
+    }
+    
+    .devider {
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #343b44;
+    }
+    
+    .search {
+     /*  background: url("../../assets/images/search.png") 15px center #363d45
+        no-repeat; */
+      padding: 8px;
+      border: navajowhite;
+      padding-left: 40px;
+      border-radius: 20px;
+      font-size: 14px;
+      color: #868b8e;
+      outline: 0;
+      width: 65%;
+    }
+    ul li:first-child {
+      margin-top: 15px;
+    }
+    ul li h3,
+    ul li h3 span {
+      font-size: 16px;
+      margin: 0;
+    }
+    
+ 
+    
+    ul li span {
+      font-size: 11px;
+      width: auto;
+      text-align: right;
+    }
+
+    .Movielist{
+      display: flex;
+      flex-wrap: wrap;
+      }
+    
+      .mb30 {
+        margin-bottom: 30px;
+      }
+      
+      
+      
+      .search {
+       /*  background: url("../../assets/images/search.png") 15px center #363d45
+          no-repeat; */
+        padding: 8px;
+        border: navajowhite;
+        padding-left: 40px;
+        border-radius: 20px;
+        font-size: 14px;
+        color: #868b8e;
+        outline: 0;
+        width: 65%;
+      }
+      
+      
+      
+      
