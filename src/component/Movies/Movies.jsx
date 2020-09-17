@@ -4,16 +4,14 @@ import styles from './Movies.module.css'
 
 import Loader from './../Loader/Loader';
 
-const MovieItems = ({ movieList, addToFavFunc, addToFav, isLoading }) => {
+const MovieItems = ({ movieList, addToFavFunc, addToFav, isLoading, isError }) => {
 
     let movies = <Loader />
 
+    movies = isError ? isError : isLoading ? <Loader /> : (movieList !== null && movieList !== undefined ? movieList.map((movie, i) => {
+        return <MovieListItem addToFav={addToFav} addToFavFunc={addToFavFunc} key={i} movie={movie} />;
+    }) : <div className={styles.msg}>No data found</div>)
 
-    if (!isLoading) {
-        movies = (movieList !== null && movieList !== undefined ? movieList.map((movie, i) => {
-            return <MovieListItem addToFav={addToFav} addToFavFunc={addToFavFunc} key={i} movie={movie} />;
-        }) : "No data found")
-    }
     return (
 
         <div className={styles.userListArea}>

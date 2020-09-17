@@ -6,3 +6,9 @@
     display: flex;
     flex-wrap: wrap;
     }
+  
+    .msg{
+      width: 100%;
+      text-align:center;
+      font-weight: bold;;
+    }
