@@ -6,5 +6,11 @@
 
 .nav a{
     display:inline-block;
+    color:#000;
+    text-decoration:none;
+}
+
+.nav a:hover{
+    color:#4DCFE0;
 }
 

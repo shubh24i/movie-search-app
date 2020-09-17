@@ -41,7 +41,23 @@ overflow: hidden;
 }
 
 .fav{
-  width: 24px;;
+  width: 24px;
+  height:24px;;
+  cursor: pointer;
+  display: inline-block;
+  background:url('../../../assests/images/heart.svg')
+} 
+
+.favFill{
+  width: 24px;
+  height:24px;;
+  cursor: pointer;
+  display: inline-block;
+  background:url('../../../assests/images/heart_fill.svg')
+}
+
+.fav:hover{
+  background:url('../../../assests/images/heart_fill.svg')
 }
 
 .disabled{

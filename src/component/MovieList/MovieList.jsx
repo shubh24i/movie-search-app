@@ -60,16 +60,26 @@ const MovieList = () => {
     }, [MOVIE_LIST_URL])
 
 
-    const addToFavHandler = (id) => {
+    const addToFavHandler = (movie) => {
+        let favMovie;
 
         var store = JSON.parse(localStorage.getItem("favMovie") || '[]');
-        store.push(id);
-        localStorage.setItem("favMovie", JSON.stringify(store));
 
-        setAddToFav((prevState) => ([
-            ...prevState,
-            id,
-        ]));
+        let isMovieExist = store.filter((item) => { return item.imdbID === movie.imdbID });
+
+        if (isMovieExist.length > 0 && store !== null) {
+            favMovie = store.filter((item) => { return item.imdbID !== movie.imdbID });
+            localStorage.setItem("favMovie", JSON.stringify(favMovie));
+            setAddToFav(favMovie)
+        } else {
+            store.push(movie);
+            localStorage.setItem("favMovie", JSON.stringify(store));
+
+            setAddToFav((prevState) => ([
+                ...prevState,
+                movie,
+            ]));
+        }
 
     };
 

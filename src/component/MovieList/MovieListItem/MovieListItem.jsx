@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import Image from "../../../utill/Image";
 
@@ -11,13 +11,22 @@ const MovieListItem = ({ movie, addToFav, addToFavFunc, fav = true }) => {
 
   const isFavIdHndler = (movie) => {
     addToFavFunc(movie);
-    setIsFav(addToFav.filter((item) => (
-      item.imdbID === movie.imdbID
-    )))
+    if (addToFav !== null && addToFav !== undefined) {
+      setIsFav(addToFav.filter((item) => (
+        item.imdbID === movie.imdbID
+      )))
+    }
   }
 
+  useEffect(() => {
+    if (addToFav !== null && addToFav !== undefined) {
+      let isIdExist = addToFav.filter((item) => { return item.imdbID === movie.imdbID });
+      isIdExist.length > 0 ? setIsFav(true) : setIsFav(false)
+    }
+  }, [movie.imdbID, addToFav])
+
   let imcSrc = (movie.Poster !== 'N/A') ? movie.Poster : require('../../../assests/images/place-holder.jpg');
-  let favUrl = !isFav ? 'heart.svg' : 'heart_fill.svg'
+  let favClass = !isFav ? styles.fav : styles.favFill
 
   return (
     <div className={styles.listItem}>
@@ -27,7 +36,7 @@ const MovieListItem = ({ movie, addToFav, addToFavFunc, fav = true }) => {
       </div>
       <p className={[styles.dFlex, styles.pLR].join(' ')}>
         <span>Year: {movie.Year}</span>
-        {fav && <span><Image clicked={() => isFavIdHndler(movie)} classes={styles.fav} source={require(`../../../assests/images/${favUrl}`)} /></span>}
+        {fav && <span onClick={() => isFavIdHndler(movie)} className={favClass}></span>}
       </p>
       <p className={styles.pLR}> <span>Type: {movie.Type} - {movie.imdbID}</span></p>
 

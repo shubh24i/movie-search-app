@@ -3,8 +3,6 @@ import MovieListItem from '../MovieList/MovieListItem/MovieListItem'
 import styles from './FavouriteMovies.module.css'
 
 const MovieItems = ({ movieIdList }) => {
-    console.log(movieIdList)
-
 
     return (
 
