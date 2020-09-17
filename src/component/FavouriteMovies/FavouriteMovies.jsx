@@ -4,16 +4,21 @@ import styles from './FavouriteMovies.module.css'
 
 const MovieItems = ({ favMovieList }) => {
 
-    let fabMovies = (favMovieList !== null && favMovieList !== undefined) && favMovieList.map((movie, i) => {
-        return <MovieListItem key={i} movie={movie} fav={false} />;
-    });
+    let fabMovies = '';
 
-    console.log('fabMovies', fabMovies);
+    if (favMovieList !== null && favMovieList.length > 0 && favMovieList !== undefined) {
+        fabMovies = favMovieList.map((movie, i) => {
+            return <MovieListItem key={i} movie={movie} fav={false} />;
+        })
+    } else {
+        fabMovies = (<div className={styles.msg}>No data found</div>)
+    };
+
     return (
 
         <div className={styles.movieListArea}>
             <div className={[styles.pRL20, styles.Movielist].join(' ')}>
-                {fabMovies.lemgth > 0 ? fabMovies : <div className={styles.msg}>No data found</div>}
+                {fabMovies}
             </div>
         </div>
 
