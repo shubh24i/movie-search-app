@@ -85,11 +85,13 @@ const MovieList = () => {
 
 
     return (
-        <Switch>
-            <Route path="/" exact  ><Search searchMovies={searchMovies} /><Movies movieList={movies} addToFavFunc={addToFavHandler} isLoading={isLoading} isError={isError} addToFav={addToFav} /></Route>
-            <Route path="/Favourites" exact><FavouriteMovies movieIdList={addToFav} /></Route>
+        <>
+            <Switch>
+                <Route path="/" exact  ><Search searchMovies={searchMovies} /><Movies movieList={movies} addToFavFunc={addToFavHandler} isLoading={isLoading} isError={isError} addToFav={addToFav} /></Route>
+                <Route path="/Favourites" exact><FavouriteMovies movieIdList={addToFav} /></Route>
+            </Switch>
             <ToastContainer />
-        </Switch>
+        </>
     );
 }
 
