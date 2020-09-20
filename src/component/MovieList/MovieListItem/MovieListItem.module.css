@@ -58,6 +58,10 @@ overflow: hidden;
   background:url('../../../assests/images/heart_fill.svg')
 }
 
+.listItem .thumb, .listItem h3{
+  cursor: pointer;
+}
+
 .fav:hover{
   background:url('../../../assests/images/heart_fill.svg')
 }
