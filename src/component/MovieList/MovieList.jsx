@@ -1,43 +1,80 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useReducer } from 'react';
 import { Route, Switch } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify';
 
 import Search from '../Search/Search';
 import Movies from '../Movies/Movies';
-import FavouriteMovies from '../FavouriteMovies/FavouriteMovies'
+import MovieDetails from '../MovieDetails/MovieDetails';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-const MovieList = () => {
+const intialState = {
+    movies: [],
+    loading: true,
+    errorMessage: null
+}
 
-    const [movies, setMovies] = useState([]);
+const reducer = (state, action) => {
+    switch (action.type) {
+        case "SEARCH_MOVIE_REQUEST":
+            return {
+                ...state,
+                loading: true,
+                errorMessage: null
+            }
+        case "SEARCH_MOVIE_SUCCESS":
+            return {
+                ...state,
+                loading: false,
+                movies: action.payload,
+            }
+        case "SEARCH_MOVIE_ERROR":
+            return {
+                ...state,
+                loading: false,
+                errorMessage: action.error
+            }
+        default:
+            return state
+    }
+}
+
+const MovieList = (history) => {
+
     const [addToFav, setAddToFav] = useState(localStorage.getItem("favMovie") !== null
         ? JSON.parse(localStorage.getItem("favMovie"))
         : null);
-    const [isLoading, setIsloading] = useState(false);
-    const [isError, setIsError] = useState('')
-
+    const [state, dispatch] = useReducer(reducer, intialState);
+    const { movies, loading, errorMessage } = state;
     const MOVIE_LIST_URL = `http://www.omdbapi.com/?apikey=eb1ef3fc`;
 
     const searchMovies = async (searchMovie, type) => {
         try {
             if (searchMovie) {
-                setIsloading(true)
-                let searchType = type ? `&type=${type}` : null;
+                dispatch({
+                    type: 'SEARCH_MOVIE_REQUEST',
+                })
+                let searchType = type ? `&type=${type}` : '';
                 let searchUrl = `${MOVIE_LIST_URL}&s=${searchMovie}${searchType}`;
                 let response = await fetch(searchUrl);
                 let movies = await response.json(); // read response body and parse as JSON
-                setMovies(movies.Search)
-                setIsloading(false)
+                dispatch({
+                    type: 'SEARCH_MOVIE_SUCCESS',
+                    payload: movies.Search
+                })
+
             } else {
                 toast.error("Please enter search text", {
                     position: toast.POSITION.BOTTOM_RIGHT,
                     autoClose: 2000,
                 })
             }
+
         } catch (error) {
-            setIsError(error)
-            setIsloading(false)
+            dispatch({
+                type: 'SEARCH_MOVIE_ERROR',
+                error: error
+            })
         }
     }
 
@@ -45,14 +82,20 @@ const MovieList = () => {
 
         async function fetchMovies() {
             try {
-                setIsloading(true)
+
                 let response = await fetch(`${MOVIE_LIST_URL}&s=bat`);
                 let movies = await response.json(); // read response body and parse as JSON
-                setMovies(movies.Search)
-                setIsloading(false)
+                dispatch({
+                    type: 'SEARCH_MOVIE_SUCCESS',
+                    payload: movies.Search
+                })
+
             } catch (error) {
-                setIsError(error)
-                setIsloading(false)
+                dispatch({
+                    type: 'SEARCH_MOVIE_ERROR',
+                    error: error
+                })
+
             }
 
         };
@@ -88,12 +131,13 @@ const MovieList = () => {
 
     };
 
-
     return (
         <>
+            <Search searchMovies={searchMovies} />
             <Switch>
-                <Route path="/" exact  ><Search searchMovies={searchMovies} /><Movies movieList={movies} addToFavFunc={addToFavHandler} isLoading={isLoading} isError={isError} addToFav={addToFav} /></Route>
-                <Route path="/Favourites" exact><FavouriteMovies favMovieList={addToFav} /></Route>
+                <Route path="/" exact  ><Movies movieList={movies} addToFavFunc={addToFavHandler} isLoading={loading} isError={errorMessage} addToFav={addToFav} /></Route>
+                <Route path="/favourites" ><Movies movieList={addToFav} addToFavFunc={addToFavHandler} isLoading={loading} isError={errorMessage} addToFav={addToFav} /></Route>
+                <Route path="/movie/:id" ><MovieDetails /></Route>
             </Switch>
             <ToastContainer />
         </>

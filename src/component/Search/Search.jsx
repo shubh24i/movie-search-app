@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom'
+
 import styles from './Search.module.css'
 
-const Search = ({ searchMovies }) => {
+const Search = ({ searchMovies, history }) => {
 
     const [userSearch, setUserSearch] = useState('');
-    const [type, setType] = useState([]);
+    const [type, setType] = useState('');
 
     const onSelectHandler = (e) => {
         let searchstr = e.currentTarget.value;
@@ -14,6 +16,9 @@ const Search = ({ searchMovies }) => {
     const onSearchHandler = (e, searchStr, url) => {
         e.preventDefault();
         searchMovies(searchStr, type);
+        setUserSearch('');
+        setType('');
+        history.push('/');
     }
 
 
@@ -23,11 +28,9 @@ const Search = ({ searchMovies }) => {
     }
 
 
-    return (<form
-        className={styles.search}
-    >
+    return (<form className={styles.search} >
         <input name="userSearch" onChange={(e) => onChangeHandler(e)} value={userSearch} type="text" placeholder="Search" />
-        <select onChange={onSelectHandler}>
+        <select onChange={onSelectHandler} value={type}>
             <option value="">All</option>
             <option value="movie" > Movies</option>
             <option value="series">Series</option>
@@ -37,4 +40,4 @@ const Search = ({ searchMovies }) => {
     </form>);
 }
 
-export default Search;
+export default withRouter(Search);

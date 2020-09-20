@@ -11,6 +11,11 @@
 }
 
 .nav a:hover{
-    color:#4DCFE0;
+    color:#178290;
+}
+
+.nav .active{
+    color:#178290;
+    font-weight: 600;
 }
 

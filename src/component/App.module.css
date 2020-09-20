@@ -1,8 +1,12 @@
 body{
   box-sizing: border-box;
 }
+ul,h1,h2,h3{
+  margin: 0;
+  padding: 0; 
+}
 .mainWrapper{
-  width: 80%;
+  width: 100%;
   max-width: 980px;
   margin: 0 auto;
 }
